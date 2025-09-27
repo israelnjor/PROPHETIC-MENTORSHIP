@@ -1,0 +1,118 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentorship 2025 Landing</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: url("papa.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #333;
+    }
+
+    /* Top-left logo */
+    .logo {
+      position: absolute;
+      color: whitesmoke;
+      background-color: rgba(142, 42, 132, 0.957);
+      top: 15px;
+      left: 20px;
+      border-radius: 4px;
+      padding-left: 4px;
+      font-size: 2rem;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .logo span {
+      background-color: #f4e3e3f6;
+      border-radius: 6px;
+      padding: 5px 10px;
+      color: #c07c07;
+    }
+
+    .check-in-container {
+      margin: 2rem auto;
+      padding: 2rem;
+      margin-top: 180px;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.491);
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+   .check-in-text {
+   font-size: 1.3rem;
+   font-weight: bold;
+   background: linear-gradient(90deg, #4b00e08f, #8e2de2); /* prettier gradient */
+   color: #fff;
+   padding: 12px 24px;
+   border-radius: 8px;
+   margin: 0.8rem auto;  /* ✅ centers it horizontally */
+   max-width: fit-content; /* shrink wrap to content */
+   text-align: center;
+   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+   letter-spacing: 0.5px;
+   }
+
+    button {
+      background: purple;
+      color: #fff;
+      padding: 10px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #6a006a;
+    }
+
+    .papa {
+      width: 240px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+    .mentor {
+      width: 300px;
+      height: 200px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Top-left logo -->
+  <div class="logo">Prophetic Mentorship-<span>2025</span></div>
+
+  <!-- ✅ Main Section -->
+  <section class="check-in-container">
+    <img src="mentor.jpeg" alt="Mentorship Image" class="mentor">
+    <img src="PEA.jpeg" alt="Mentorship Image" class="papa">
+    <img src="papa.jpeg" alt="Mentorship Image" class="papa">
+    
+    <div class="check-in-text">
+      Click the button below to check in
+    </div>
+    
+    <!-- ✅ Button -->
+    <button onclick="window.location.href='mentor.html'">CHECK IN</button>
+  </section>
+
+</body>
+</html>

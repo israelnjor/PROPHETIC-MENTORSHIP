@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentorship 2025 Check-In</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(230, 159, 230, 0.92), rgba(79, 19, 79, 0.966));
+      background-attachment: fixed;
+      color: #333;
+    }
+
+    .mentor-container {
+      width: 650px;
+      height: 450px;
+      background-image: url("mentor.jpeg");
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    .logo {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: whitesmoke;
+      background: rgba(142, 42, 132, 0.85);
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: underline;
+      z-index: 10;
+    }
+    .logo span {
+      background-color: #fff;
+      border-radius: 4px;
+      padding: 4px 8px;
+      color: #9b6406;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.895);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 360px;
+      transition: all 0.3s ease;
+    }
+
+    h2 {
+      color: purple;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 95%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 15px;
+    }
+
+    button {
+      background: purple;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #6a006a;
+    }
+
+    #responseBox {
+      display: none;
+    }
+    #responseMessage {
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    #qr img {
+      max-width: 180px;
+      margin-top: 8px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    /* Loader animation */
+    .loader {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid purple;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">Mentorship <span>2025</span></div>
+
+  <div class="mentor-container">
+    <!-- Check-in card -->
+    <div class="card" id="formBox">
+      <h2>Event Check-In</h2>
+      <form id="checkInForm">
+        <input type="text" id="phone" placeholder="Enter Phone Number" required>
+        <button type="submit">Check In</button>
+      </form>
+    </div>
+
+    <!-- Response card -->
+    <div class="card" id="responseBox">
+      <div id="loader" style="display:none;">
+        <div class="loader"></div>
+        <p>Checking, please wait...</p>
+      </div>
+      <div id="responseMessage"></div>
+      <div id="qr"></div>
+      <button onclick="goBack()">Go Back</button>
+    </div>
+  </div>
+
+<script>
+  const formBox = document.getElementById("formBox");
+  const responseBox = document.getElementById("responseBox");
+  const responseMessage = document.getElementById("responseMessage");
+  const qrDiv = document.getElementById("qr");
+  const loader = document.getElementById("loader");
+
+  document.getElementById("checkInForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const phone = document.getElementById("phone").value.trim();
+    const url = `https://script.google.com/macros/s/AKfycbze02B4VTBQDgKn-gKjpbHDOMmAAOekY8jzG_u-e5zYC2Qpau-qXFqAGy5LLYqcCfU/exec?phone=${encodeURIComponent(phone)}`;
+
+    // show loader
+    formBox.style.display = "none";
+    responseBox.style.display = "block";
+    loader.style.display = "block";
+    responseMessage.innerText = "";
+    qrDiv.innerHTML = "";
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      loader.style.display = "none"; // hide loader
+
+      // ✅ Overwrite messages here
+      if (data.success) {
+        responseMessage.innerText = `✅ Welcome ${data.firstName || ""} ${data.lastName || ""}, check-in successful!`;
+        responseMessage.style.color = "green";
+        qrDiv.innerHTML = ""; 
+      } else {
+        responseMessage.innerText = "❌ Sorry, you are not registered. Please scan the QR below to register.";
+        responseMessage.style.color = "red";
+        qrDiv.innerHTML = `<img src="qr.png" alt="Scan to register">`;
+      }
+    } catch (err) {
+      loader.style.display = "none";
+
+      responseMessage.innerText = "⚠️ Error connecting to server. Please try again later.";
+      responseMessage.style.color = "red";
+      qrDiv.innerHTML = "";
+    }
+  });
+
+  function goBack() {
+    responseBox.style.display = "none";
+    formBox.style.display = "block";
+    document.getElementById("checkInForm").reset();
+  }
+</script>
+
+</body>
+</html>
